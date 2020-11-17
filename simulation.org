@@ -27,6 +27,7 @@ SIFT的全称是Scale Invariant Feature Transform，尺度不变特征变换，�
 ** 结果分析与讨论
 1. 示例代码数据
 [[./img/sift_test_result_1.png]]
+
 2. 手机拍摄图片数据
 [[./img/sift_test_result_2.png
 ]]
