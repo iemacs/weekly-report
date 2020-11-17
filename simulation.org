@@ -28,7 +28,8 @@ SIFT的全称是Scale Invariant Feature Transform，尺度不变特征变换，�
 1. 示例代码数据
 [[./img/sift_test_result_1.png]]
 2. 手机拍摄图片数据
-[[./img/sift_test_result_2.png]]
+[[./img/sift_test_result_2.png
+]]
 从两个数据的实验结果来看，该实现基本上可对两张图片的相似点进行较好的提取，但对干扰点的排除有待加强
 ** 结论
 该实现计算出SIFT的关键点和描述符后，对FLANN进行初始化，并用FLANN进行快速高效匹配，通过描述符的距离进行选择需要的点，然后对两张图片的相似点进行匹配连线。
