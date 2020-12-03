@@ -40,7 +40,8 @@ SIFT的全称是Scale Invariant Feature Transform，尺度不变特征变换，�
 处理前：[[./img/orgin1.png]]
 处理后：[[./img/enhance11.png]]
 输入到模型训练结果[[./img/enhance_SIFT1.png]]
-2. 先用掩码对图片进行裁剪，高斯滤波处理图像，接着对其增强对比度，再进行灰度值线性变换，然后进行空间域Kirsch锐化
+2. 先用掩码对图片进行裁剪后转为灰度图，再用高斯滤波处理图像，接着对其增强对比度，再进行灰度值线性变换，然后进行空间域Kirsch锐化
+具体处理流程：[[./img/chuliguocheng2.png]]
 处理前[[./img/origin1.jpg]]
 处理后[[./img/enhance1.png]]
 输入到模型训练结果为[[./img/enhance_SIFT2.png]]
