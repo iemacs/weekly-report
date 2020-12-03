@@ -31,20 +31,24 @@ SIFT的全称是Scale Invariant Feature Transform，尺度不变特征变换，�
 ** 结果分析与讨论
 *** 灰度化
 确定灰度值的max和min并设置为上下限，然后对其他像素点的灰度值进行线性插值
+
 处理前[[./img/gray1.png]]
+
 处理后[[./img/test1.png]]
+
 输入到模型后无法提取到有用信息，提示“Not enough matches are found”
 *** 增强处理
 1. 先用高斯滤波处理图像，再增强图像对比度，再进行灰度值变换，然后进行空间域kirsch锐化
-具体流程：[[./img/chuliguocheng1.png]]
-处理前：[[./img/orgin1.png]]
-处理后：[[./img/enhance11.png]]
-输入到模型训练结果[[./img/enhance_SIFT1.png]]
+1) 具体流程：[[./img/chuliguocheng1.png]]
+2) 处理前：[[./img/orgin1.png]]
+3) 处理后：[[./img/enhance11.png]]
+4) 输入到模型训练结果[[./img/enhance_SIFT1.png]]
 2. 先用掩码对图片进行裁剪后转为灰度图，再用高斯滤波处理图像，接着对其增强对比度，再进行灰度值线性变换，然后进行空间域Kirsch锐化
-具体处理流程：[[./img/chuliguocheng2.png]]
-处理前[[./img/origin1.jpg]]
-处理后[[./img/enhance1.png]]
-输入到模型训练结果为[[./img/enhance_SIFT2.png]]
+1) 具体处理流程：[[./img/chuliguocheng2.png]]
+2) 处理前[[./img/origin1.jpg]]
+3) 处理后[[./img/enhance1.png]]
+4) 输入到模型训练结果为[[./img/enhance_SIFT2.png]]
+
 由实验结果可看出，模型提取到的主要为边缘轮廓的特征点，对火焰的边缘仅有非常有限的捕捉
 *** 输入相同图片
 为了验证模型的提取能力，输入同一张的图进行训练，观察其提取特征点的能力
