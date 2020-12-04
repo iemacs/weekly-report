@@ -1,8 +1,21 @@
+* [2020-12-04 周五]
+** Done
+1. 将火焰图像转化为灰度矩阵，确定灰度值的max和min并设置为上下限，然后对其他像素点的灰度值进行线性插值，再输入到SIFT模型中进行训练。输入到模型后仍无法提取到有用信息，提示“Not enough matches are found”。
+2. 将火焰图像进行高斯滤波、增强对比度、灰度值变换、空间域锐化等处理之后，输入到sift模型中训练。具体步骤记录在simulation中。模型提取到的主要为边缘轮廓的特征点，对火焰的边缘仅有非常有限的捕捉。
+3. 将同一张图片先后输入到模型中训练，观察其提取特征点的能力。模型主要抓取图片边缘轮廓的特征点，对火焰的纹理抓取较少。
+4. 阅读文献《基于图像处理的燃气火焰稳定性检测试验研究》
+** Questions
+1. 输入到模型后仍无法提取到有用信息，提示“Not enough matches are found”。
+2. 模型提取到的主要为边缘轮廓的特征点，对火焰的边缘仅有非常有限的捕捉。
+** Plan
+1. 细读文章《基于火焰图像和卷积稀疏自编码的燃烧工况监测》
+2. 研究刘闽建师姐的模型（结合其论文第3、4章）
+3. 继续阅读相关文章
 * [2020-11-27 周五]
 ** Done
 1. 将火焰图像转化为灰度图、二值图，输入到SIFT模型中训练
 2. 阅读了文章《王煜伟,田宏伟,秦永新,韩哲哲,许传龙.基于火焰图像和卷积稀疏自编码的燃烧工况监测》
-** Question
+** Questions
 1. 将灰度化后的火焰图像输入到模型中仍然无法匹配相似点，模型无法提取火焰图像信息
 2. 将火焰图像二值化后数据图像信息丢失
 ** Plan
@@ -12,7 +25,7 @@
 ** Done
 1. 截取火焰图像仅有火焰图像的部分输入到SIFT模型中进行训练
 2. 阅读师姐的论文
-** Question
+** Questions
 1. 截取火焰图像仅有火焰图像的部分输入到SIFT模型中进行训练无法提取到相似点，输出结果为“Not enough matches are found”
 2. 师姐的论文中有些地方需要查阅相关资料更仔细的阅读
 ** Plan
@@ -39,7 +52,7 @@
 ** Done
 1. 阅读《Real-Time Fire Detection Based On Deep Convolutional Long-Recurrent Networks And Optical Flow Method》、《Optical Flow Feature Based for Fire Detection on Video Data》、《高炉内煤粉燃烧速度场的数值模》、《混煤燃烧特性研究及燃烧速度预测》。
 2. 找图片拼接的示例，示例所用为SIFT算法和FLANN函数库。
-** Question
+** Questions
 1. 阅读文章中没用利用光流法提取图像相似点从而计算扩散速度的应用。
 2. 运行示例代时，错误提示为 ModuleNotFoundError: No module named 'cv2' ，经检查已安装OpenCV和OpenCV-python模块，仍提示相同错误类型，故未能跑通示例代码。
 ** Plan
@@ -51,7 +64,7 @@
 ** Done
 1. 找计算相似点的代码，并运行例子
 2. 阅读《Optical Flow Estimation for Flame Detection in Videos》、《Dynamic Feature-based Fire Detection Using Fusion of Markov Random Field and PCA Optical Flow》、《基于光流动态特征与 SVM 的阴燃火检测方法》、《FIRE AND SMOKE DETECTION IN VIDEO WITH OPTIMAL MASS TRANSPORT BASED OPTICAL FLOW AND NEURAL NETWORKS》、《基于光流法火灾烟雾视频图像识别及多信息融合探测算法研究》
-** question
+** questions
 1. 所找计算相似点的示例为计算前后图片的相似性，不符合课题设想中计算图片相似点的应用想法
 2. 阅读文章中没有解决类似问题的文章
 ** Plan
