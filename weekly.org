@@ -1,3 +1,14 @@
+* [2020-12-18 周五]
+** Done
+1. 训练了师姐的模型。
+2. 用CNN神经网络模型训练火焰图像数据。
+3. 阅读了《Discriminative learning of deep convolutional feature point descriptors》、《Euclidean and Hamming Embedding for image patch description with convolutional networks》、《基于改进AKAZE和RANSAC的全景图像拼接算法研究》。
+** Questions
+1. 师姐VAE编码编码输出的1024维特征向量，目前只打印出来，没有找到更直观的可视化方式。
+2. 神经网络对火焰图像的提取效果不理想（具体看实验报告）。
+** Plan
+1. 用更好的可视化方式打开npy文件。
+2. 阅读其他相关文献。
 * [2020-12-11 周五]
 ** Done
 1. 阅读了文章《基于火焰成像和堆栈降噪自编码的燃烧工况识》。
