@@ -1,3 +1,21 @@
+* [2021-01-01 周五]
+** Done
+1. 用MatchNet模型训练了火焰图像数据。
+2. 阅读了文章《 Comparative Evaluation of Hand-Crafted and Learned Local Featuresn》。
+** Questions
+神经网络对火焰图像的提取效果不理想。
+** Plan
+1. 用LSTM网络训练时序数据进行分类。
+2. 阅读其他相关文献。
+* [2020-12-25 周五]
+** Done  
+1. 阅读了文章《MatchNet: Unifying Feature and Metric Learning for Patch-Based Matching》、《Universal Correspondence Network》、《Learned Invariant Feature Transform》。
+2. 用神经网络中的LIFT模型训练火焰图像数据。
+** Questions
+神经网络对火焰图像的提取效果不理想。
+** Plan
+1. 尝试其他的神经网络模型训练火焰数据。
+2. 阅读其他相关文献。
 * [2020-12-18 周五]
 ** Done
 1. 训练了师姐的模型。
@@ -7,7 +25,7 @@
 1. 师姐VAE编码编码输出的1024维特征向量，目前只打印出来，没有找到更直观的可视化方式。
 2. 神经网络对火焰图像的提取效果不理想（具体看实验报告）。
 ** Plan
-1. 用更好的可视化方式打开npy文件。
+1. 尝试其他的神经网络模型训练火焰数据。
 2. 阅读其他相关文献。
 * [2020-12-11 周五]
 ** Done
