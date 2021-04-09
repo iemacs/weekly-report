@@ -3,15 +3,15 @@
 运用自编码器重构输出（keras框架下实现）
 ** 理论基础
 1. 自编码器（Autoencoder, AE）
-  1) 自编码器是一种无监督的数据维度压缩和数据特征表达方法，利用反向传播算法使得输出值等于输入值的神经网络，先将输入压缩成潜在空间表征，然后通过这种表征来重构输出。
-     #+CAPTION: (图片标题)
-     [[./img/autoencoder/thesis/AE_1.png]]
-     自编码器由两部分组成：
-     编码器（encoder）:这部分能将输入压缩成潜在空间表征，可以用编码函数h=f(x)表示。
-     解码器（decoder）:这部分重构来自潜在空间表征的输入，可以用解码函数r=g(h)表示。
-     因此，整个自编码器可以用函数g(f(x))=r来描述，其中输出r与原始输入x相近。h=f(x)表示编码器，r=g(h)=g(f(x))表示解码器，自编码的目标便是优化损失函数L(x,g(f(x))，也就是减小图中的Error。
-  2) 自编码器是前馈神经网络的一种，最开始主要用于数据的降维以及特征的抽取，随着技术的不断发展，现在也被用于生成模型中，可用来生成图片等。前馈神经网络是有监督学习，其需要大量的标注数据。自编码器是无监督学习，数据不需要标注因此较容易收集。前馈神经网络在训练时主要关注的是输出层的数据以及错误率，而自编码的应用可能更多的关注中间隐层的结果。
-  3) 在普通的自编码器中，输入和输出是完全相同的，因此输出没有什么应用价值，所以我们希望利用中间隐层的结果，比如，可以将其作为特征提取的结果、利用中间隐层获取最有用的特性等。但是如果只使用普通的自编码器会面临什么问题呢？比如，输入层和输出层的维度都是5，中间隐层的维度也是5，那么使用相同的输入和输出来不断优化隐层参数，最终得到的参数可能是：x1−>a1，x2−>a2，… 的参数为1，其余参数为0。也就是说，中间隐层的参数只是完全将输入记忆下来，并在输出时将其记忆的内容完全输出即可，神经网络在做恒等映射，产生数据过拟合。
+   1) 自编码器是一种无监督的数据维度压缩和数据特征表达方法，利用反向传播算法使得输出值等于输入值的神经网络，先将输入压缩成潜在空间表征，然后通过这种表征来重构输出。
+      #+CAPTION: (图片标题)
+      [[./img/autoencoder/thesis/AE_1.png]]
+      自编码器由两部分组成：
+      编码器（encoder）:这部分能将输入压缩成潜在空间表征，可以用编码函数h=f(x)表示。
+      解码器（decoder）:这部分重构来自潜在空间表征的输入，可以用解码函数r=g(h)表示。
+      因此，整个自编码器可以用函数g(f(x))=r来描述，其中输出r与原始输入x相近。h=f(x)表示编码器，r=g(h)=g(f(x))表示解码器，自编码的目标便是优化损失函数L(x,g(f(x))，也就是减小图中的Error。
+   2) 自编码器是前馈神经网络的一种，最开始主要用于数据的降维以及特征的抽取，随着技术的不断发展，现在也被用于生成模型中，可用来生成图片等。前馈神经网络是有监督学习，其需要大量的标注数据。自编码器是无监督学习，数据不需要标注因此较容易收集。前馈神经网络在训练时主要关注的是输出层的数据以及错误率，而自编码的应用可能更多的关注中间隐层的结果。
+   3) 在普通的自编码器中，输入和输出是完全相同的，因此输出没有什么应用价值，所以我们希望利用中间隐层的结果，比如，可以将其作为特征提取的结果、利用中间隐层获取最有用的特性等。但是如果只使用普通的自编码器会面临什么问题呢？比如，输入层和输出层的维度都是5，中间隐层的维度也是5，那么使用相同的输入和输出来不断优化隐层参数，最终得到的参数可能是：x1−>a1，x2−>a2，… 的参数为1，其余参数为0。也就是说，中间隐层的参数只是完全将输入记忆下来，并在输出时将其记忆的内容完全输出即可，神经网络在做恒等映射，产生数据过拟合。
      [[./img/autoencoder/thesis/AE_2.png]]
      如图是隐层单元数等于输入维度的情况，如果是隐层单元数大于输入维度也会发生类似的情况，即当隐层单元数大于等于输入维度时，网络可以采用完全记忆的方式。虽然这种方式在训练时精度很高，但是复制的输出无实际意义。因此，往往给隐层加一些约束，如限制隐藏单元数、添加正则化等。
 2. 栈式自编码器（Stack Autoencoder）
@@ -21,86 +21,86 @@
    3) 栈式自编码器增加隐层可以学到更复杂的编码，每一层可以学习到不同的信息维度。若层数太深，encoder过于强大，可以将学习将输入映射为任意数（然后decoder学习其逆映射）。这一编码器可以很好的重建数据，但并没有在这一过程中学到有用的数据表示。
 3. 稀疏自编码器（Sparse Autoencoder）
    1) 稀疏自编码器是加入正则化的自编码器，其未限制网络接收数据的能力，即不限制隐藏层的单元数。
-   所谓稀疏性限制是指：若激活函数是sigmoid，则当神经元的输出接近于1的时候认为神经元被激活，输出接近于0的时候认为神经元被抑制。使得大部分神经元别抑制的限制叫做稀疏性限制。若激活函数是tanh，则当神经元的输出接近于-1的时候认为神经元是被抑制的。
-   [[./img/autoencoder/thesis/Sparse_AE_1.pn]]如上图所示，浅色的神经元表示被抑制的神经元，深色的神经元表示被激活的神经元。通过稀疏自编码器，没有限制隐藏层的单元数，但防止了网络过度记忆的情况。
-   稀疏自编码器损失函数的基本表示形式如下：
-   [[./img/autoencoder/thesis/Sparse_AE_2.png]]
-   其中g(h)g(h)是解码器的输出，通常h是编码器的输出，即h=f(x)。
-   1) 损失函数和BP函数推导（暂略）
-   2) 稀疏自编码器一般用来学习特征，以便用于像分类这样的任务。
-   [[./img/autoencoder/thesis/Sparse_AE_3.png]]
-   上图所述过程不是一次训练的，可以看到上面只有编码器没有解码器，因此其训练过程是自编码器先使用数据训练参数，然后保留编码器，将解码器删除并在后面接一个分类器，并使用损失函数来训练参数已达到最后效果。
+      所谓稀疏性限制是指：若激活函数是sigmoid，则当神经元的输出接近于1的时候认为神经元被激活，输出接近于0的时候认为神经元被抑制。使得大部分神经元别抑制的限制叫做稀疏性限制。若激活函数是tanh，则当神经元的输出接近于-1的时候认为神经元是被抑制的。
+      [[./img/autoencoder/thesis/Sparse_AE_1.pn]]
+      如上图所示，浅色的神经元表示被抑制的神经元，深色的神经元表示被激活的神经元。通过稀疏自编码器，没有限制隐藏层的单元数，但防止了网络过度记忆的情况。
+      稀疏自编码器损失函数的基本表示形式如下：
+      [[./img/autoencoder/thesis/Sparse_AE_2.png]]
+      其中g(h)g(h)是解码器的输出，通常h是编码器的输出，即h=f(x)。
+   2) 损失函数和BP函数推导（暂略）
+   3) 稀疏自编码器一般用来学习特征，以便用于像分类这样的任务。
+      [[./img/autoencoder/thesis/Sparse_AE_3.png]]
+      上图所述过程不是一次训练的，可以看到上面只有编码器没有解码器，因此其训练过程是自编码器先使用数据训练参数，然后保留编码器，将解码器删除并在后面接一个分类器，并使用损失函数来训练参数已达到最后效果。
 4. 去噪自编码器（Denoising Autoencoder）
-5. 去噪自编码器是一类接受损失数据作为输入，并训练来预测原始未被损坏的数据作为输出的自编码器。
-[[./img/autoencoder/thesis/Denoising_AE_1.png]]
-2) 训练过程：引入一个损坏过程 C(\tilde{x}|x)，这个条件分布代表给定数据样本x产生损坏样本\tilde{x} 
-的概率。自编码器学习重构分布p_{reconstruct}(x|\tilde{x}):
-从训练数据中采一个训练样本x
-从C(\tilde{x}|X=x)采一个损坏样本\tilde{x} 
-将(\tilde{x}, x)作为训练样本来估计自编码器的重构分布p_{reconstruct}(x|\tilde{x})=p_{decoder}(x|h)，其中h是编码器f(\tilde{x})的输出，p_{decoder}p根据解码函数g(h)定义。
-去噪自编码器中作者给出的直观解释是：和人体感官系统类似，比如人的眼睛看物体时，如果物体的某一小部分被遮住了，人依然能够将其识别出来，所以去噪自编码器就是破坏输入后，使得算法学习到的参数仍然可以还原图片。
-3) 普通的自编码器的本质是学一个相等函数，即输入和输出是同一个内容，这种相等函数的缺点便是当测试样本和训练样本不符合同一个分布时，在测试集上效果不好，而去噪自编码器可以很好地解决这个问题。
-欠完备自编码器限制学习容量，而去噪自编码器允许学习容量很高，同时防止在编码器和解码器学习一个无用的恒等函数。
-经过了加入噪声并进行降噪的训练过程，能够强迫网络学习到更加鲁棒的不变性特征，获得输入的更有效的表达。
+   1) 去噪自编码器是一类接受损失数据作为输入，并训练来预测原始未被损坏的数据作为输出的自编码器。
+      [[./img/autoencoder/thesis/Denoising_AE_1.png]]
+   2) 训练过程：引入一个损坏过程 C(\tilde{x}|x)，这个条件分布代表给定数据样本x产生损坏样本\tilde{x}的概率。自编码器学习重构分布p_{reconstruct}(x|\tilde{x}):
+      从训练数据中采一个训练样本x
+      从C(\tilde{x}|X=x)采一个损坏样本\tilde{x} 
+      将(\tilde{x}, x)作为训练样本来估计自编码器的重构分布p_{reconstruct}(x|\tilde{x})=p_{decoder}(x|h)，其中h是编码器f(\tilde{x})的输出，p_{decoder}p根据解码函数g(h)定义。
+      去噪自编码器中作者给出的直观解释是：和人体感官系统类似，比如人的眼睛看物体时，如果物体的某一小部分被遮住了，人依然能够将其识别出来，所以去噪自编码器就是破坏输入后，使得算法学习到的参数仍然可以还原图片。
+   3) 普通的自编码器的本质是学一个相等函数，即输入和输出是同一个内容，这种相等函数的缺点便是当测试样本和训练样本不符合同一个分布时，在测试集上效果不好，而去噪自编码器可以很好地解决这个问题。
+      欠完备自编码器限制学习容量，而去噪自编码器允许学习容量很高，同时防止在编码器和解码器学习一个无用的恒等函数。
+      经过了加入噪声并进行降噪的训练过程，能够强迫网络学习到更加鲁棒的不变性特征，获得输入的更有效的表达。
 5. 卷积自编码器（convolutional Autoencoder）
-1) 卷积自编码器和普通自编码器的区别在于其encoder和decoder都是卷积神经网络，相应的，encoder使用的是卷积操作和池化操作，而decoder中使用的反卷积操作和反卷积操作。（关于卷积、反卷积、池化和反池化的内容暂略）
+   1) 卷积自编码器和普通自编码器的区别在于其encoder和decoder都是卷积神经网络，相应的，encoder使用的是卷积操作和池化操作，而decoder中使用的反卷积操作和反卷积操作。（关于卷积、反卷积、池化和反池化的内容暂略）
 ** 数据来源
 MNIST手写数字集
 ** 实验步骤
 1. 自编码器（Autoencoder, AE）
-Keras封装的比较厉害，这里是最简单的自编码器，其输入维度是28*28=784，中间单隐层的维度是2，使用的激活函数是Relu，返回encoder和autoencoder。encoder部分可以用于降维后的可视化，或者降维之后接分类等，autoencoder可以用来生成图片等。
-结构见图如下：
-[[./img/autoencoder/thesis/AE_3.png]]
+   Keras封装的比较厉害，这里是最简单的自编码器，其输入维度是28*28=784，中间单隐层的维度是2，使用的激活函数是Relu，返回encoder和autoencoder。encoder部分可以用于降维后的可视化，或者降维之后接分类等，autoencoder可以用来生成图片等。
+   结构见图如下：
+   [[./img/autoencoder/thesis/AE_3.png]]
 2. 栈式自编码器（Stack Autoencoder）
-栈式自编码器相当于深度网络的过程，主要注意维度对应即可，另外，这里设置的encoder和decoder的维度是对称的。
-其架构图如下：
-[[./img/autoencoder/thesis/Stack_AE_2.png]]
+   栈式自编码器相当于深度网络的过程，主要注意维度对应即可，另外，这里设置的encoder和decoder的维度是对称的。
+   其架构图如下：
+   [[./img/autoencoder/thesis/Stack_AE_2.png]]
 3. 稀疏自编码器（Sparse Autoencoder）
-以多层的自编码器举例，单隐层的同样适用，主要是在第一层加一个正则化项，activity_regularizer=regularizers.l1(10e-6)说明加入的是L1正则化项，10e-6是正则化项系数。
-其架构如下：
-[[./img/autoencoder/thesis/Sparse_AE_4.png]]
+   以多层的自编码器举例，单隐层的同样适用，主要是在第一层加一个正则化项，activity_regularizer=regularizers.l1(10e-6)说明加入的是L1正则化项，10e-6是正则化项系数。
+   其架构如下：
+   [[./img/autoencoder/thesis/Sparse_AE_4.png]]
 4. 去噪自编码器（Denoising Autoencoder）
-去噪自编码器主要是对输入添加噪声，所以训练过程是不需要改变的，只需要改变输入和输出。
-上述便是对输入添加噪声的过程，NOISE_FACTOR * np.random.normal(loc=0.0, scale=1.0, size=x_train.shape)便是添加的噪声。 np.clip()是截取函数，将数值限制在0~1之间。
-其架构如下：
-[[./img/autoencoder/thesis/Denoising_AE_2.png]]
+   去噪自编码器主要是对输入添加噪声，所以训练过程是不需要改变的，只需要改变输入和输出。
+   上述便是对输入添加噪声的过程，NOISE_FACTOR * np.random.normal(loc=0.0, scale=1.0, size=x_train.shape)便是添加的噪声。 np.clip()是截取函数，将数值限制在0~1之间。
+   其架构如下：
+   [[./img/autoencoder/thesis/Denoising_AE_2.png]]
 5. 卷积自编码器（convolutional Autoencoder）
-在Keras编码中，反卷积的实现代码便是卷积操作。UpSampling2D()实现的是反平均卷积的操作。
-代码架构图如下：
-[[./img/autoencoder/thesis/Conv_AE.png]]
+   在Keras编码中，反卷积的实现代码便是卷积操作。UpSampling2D()实现的是反平均卷积的操作。
+   代码架构图如下：
+   [[./img/autoencoder/thesis/Conv_AE.png]]
 ** 结果分析与讨论
 1. 自编码器（Autoencoder, AE）
-Encoder结果的可视化如图：
-[[./img/autoencoder/MNIST/AE_Output_visualization.png]]
-上图中不同表示表示不同的数字，由图可知，自编码器降维之后的结果并不能很好地表示10个数字。
-AutoEncoder还原之后的图片和原图片对比如下：
-[[./img/autoencoder/MNIST/AE_restruction.png]]
-上图说明，autoencoder的生成结果不是很清晰。
+   Encoder结果的可视化如图：
+   [[./img/autoencoder/MNIST/AE_Output_visualization.png]]
+   上图中不同表示表示不同的数字，由图可知，自编码器降维之后的结果并不能很好地表示10个数字。
+   AutoEncoder还原之后的图片和原图片对比如下：
+   [[./img/autoencoder/MNIST/AE_restruction.png]]
+   上图说明，autoencoder的生成结果不是很清晰。
 1. 栈式自编码器（Stack Autoencoder）
-Encoder结果的可视化如图：
-[[./img/autoencoder/MNIST/Stack_AE_Output_visualization.png]]
-上图中不同表示表示不同的数字，由图可知，栈式自编码器的效果相比较普通自编码器好很多，这里基本能将10个分类全部分开。
-AutoEncoder还原之后的图片和原图片对比如下：
-[[./img/autoencoder/MNIST/Stack_AE_restruction.png]]
+   Encoder结果的可视化如图：
+   [[./img/autoencoder/MNIST/Stack_AE_Output_visualization.png]]
+   上图中不同表示表示不同的数字，由图可知，栈式自编码器的效果相比较普通自编码器好很多，这里基本能将10个分类全部分开。
+   AutoEncoder还原之后的图片和原图片对比如下：
+   [[./img/autoencoder/MNIST/Stack_AE_restruction.png]]
 3. 稀疏自编码器（Sparse Autoencoder）
-Encoder结果的可视化如图：
-[[./img/autoencoder/MNIST/Sparse_AE_Output_visualization.png]]
-上图中不同颜色表示不同的数字，由图可知，这个编码器的分类效果还可以，比自编码器好很多，但作用不大，大部分作用需要归功于栈式自编码器。
-AutoEncoder还原之后的图片和原图片对比如下：
-[[./img/autoencoder/MNIST/Stack_AE_restruction.png]]
+   Encoder结果的可视化如图：
+   [[./img/autoencoder/MNIST/Sparse_AE_Output_visualization.png]]
+   上图中不同颜色表示不同的数字，由图可知，这个编码器的分类效果还可以，比自编码器好很多，但作用不大，大部分作用需要归功于栈式自编码器。
+   AutoEncoder还原之后的图片和原图片对比如下：
+   [[./img/autoencoder/MNIST/Stack_AE_restruction.png]]
 4. 去噪自编码器（Denoising Autoencoder）
-Encoder结果的可视化如图：
-[[./img/autoencoder/MNIST/Denoising_AE_Output_visualization.png]]
-上图中不同表示表示不同的数字，这里不是很直观，看下面的图片对比:
-[[./img/autoencoder/MNIST/Denoising_AE_add_noise.png]]
-上图是添加噪声的效果对比，第一行表示原数据，第二行表示噪声处理过后的数据。
-AutoEncoder还原之后的图片和原图片对比如下：
-[[./img/autoencoder/MNIST/Denoising_AE_restruction.png]]
-上图根据噪声数据还原图片的对比，第一行表示噪声处理过后的数据，第二行表示去噪自编码器decoder还原之后的结果，上图可看出去噪自编码器的效果不错。
+   Encoder结果的可视化如图：
+   [[./img/autoencoder/MNIST/Denoising_AE_Output_visualization.png]]
+   上图中不同表示表示不同的数字，这里不是很直观，看下面的图片对比:
+   [[./img/autoencoder/MNIST/Denoising_AE_add_noise.png]]
+   上图是添加噪声的效果对比，第一行表示原数据，第二行表示噪声处理过后的数据。
+   AutoEncoder还原之后的图片和原图片对比如下：
+   [[./img/autoencoder/MNIST/Denoising_AE_restruction.png]]
+   上图根据噪声数据还原图片的对比，第一行表示噪声处理过后的数据，第二行表示去噪自编码器decoder还原之后的结果，上图可看出去噪自编码器的效果不错。
 5. 卷积自编码器（convolutional Autoencoder）
-AutoEncoder还原之后的图片和原图片对比如下：
-[[./img/autoencoder/MNIST/Conv_AE_restruction.png]]
-上图根据原图片和生成图片的对比，第一行表示原图片，第二行表示卷积自编码器decoder还原之后的结果，上图可看出效果不错。
+   AutoEncoder还原之后的图片和原图片对比如下：
+   [[./img/autoencoder/MNIST/Conv_AE_restruction.png]]
+   上图根据原图片和生成图片的对比，第一行表示原图片，第二行表示卷积自编码器decoder还原之后的结果，上图可看出效果不错。
 ** 结论
 实验中用到的几种自编码器的变形对于不同数字的表示效果明显好于普通自编码器，基本能将10个分类分开；而且重构生成结果也较好。
 以下效果需要着重考虑：
