@@ -21,7 +21,7 @@
 3. 稀疏自编码器（Sparse Autoencoder）
    1. 稀疏自编码器是加入正则化的自编码器，其未限制网络接收数据的能力，即不限制隐藏层的单元数。
       所谓稀疏性限制是指：若激活函数是sigmoid，则当神经元的输出接近于1的时候认为神经元被激活，输出接近于0的时候认为神经元被抑制。使得大部分神经元别抑制的限制叫做稀疏性限制。若激活函数是tanh，则当神经元的输出接近于-1的时候认为神经元是被抑制的。
-      [[./img/autoencoder/thesis/Sparse_AE_1.pn]]
+      [[./img/autoencoder/thesis/Sparse_AE_1.png]]
       如上图所示，浅色的神经元表示被抑制的神经元，深色的神经元表示被激活的神经元。通过稀疏自编码器，没有限制隐藏层的单元数，但防止了网络过度记忆的情况。
       稀疏自编码器损失函数的基本表示形式如下：
       [[./img/autoencoder/thesis/Sparse_AE_2.png]]
@@ -64,7 +64,7 @@ MNIST手写数字集
    其架构如下：
    [[./img/autoencoder/thesis/Denoising_AE_2.png]]
 5. 卷积自编码器（convolutional Autoencoder）
-   在Keras编码中，反卷积的实现代码便是卷积操作。UpSampling2D()实现的是反平均卷积的操作。 
+   在Keras编码中，反卷积的实现代码便是卷积操作。UpSampling2D()实现的是反平均卷积的操作。 
    代码架构图如下：
    [[./img/autoencoder/thesis/Conv_AE.png]]
 ** 结果分析与讨论
@@ -75,7 +75,7 @@ MNIST手写数字集
    AutoEncoder还原之后的图片和原图片对比如下：
    [[./img/autoencoder/MNIST/AE_restruction.png]]
    上图说明，autoencoder的生成结果不是很清晰。
-1. 栈式自编码器（Stack Autoencoder）
+2. 栈式自编码器（Stack Autoencoder）
    Encoder结果的可视化如图：
    [[./img/autoencoder/MNIST/Stack_AE_Output_visualization.png]]
    上图中不同表示表示不同的数字，由图可知，栈式自编码器的效果相比较普通自编码器好很多，这里基本能将10个分类全部分开。
@@ -103,7 +103,7 @@ MNIST手写数字集
 ** 结论
 实验中用到的几种自编码器的变形对于不同数字的表示效果明显好于普通自编码器，基本能将10个分类分开；而且重构生成结果也较好。
 以下效果需要着重考虑：
-1. 可比性（不同自编码器之间以及对火焰数据的适用程度）
+1. 可比性（不同自编码器之间以及其对火焰数据的适用程度）
 2. 适用性（实验逻辑性出发点即对应要解决的具体问题和希望提升的效果）
 * CNNmatching模型提取火焰信息
 ** 实验目的
@@ -129,7 +129,7 @@ MNIST手写数字集
 ** 结果分析与讨论
 1. 谷歌地球图像之间的匹配结果（2009年和2018年）:
    [[./img/cnn-matching/reslut_1.jpeg]]
-2. 无人机光学图像与红外热像的匹配结果: 
+2. 无人机光学图像与红外热像的匹配结果:
    [[./img/cnn-matching/reslut_2.jpeg]]
 3. SAR图像（GF-3）与光学卫星（ZY-3）图像的匹配结果:
    [[./img/cnn-matching/reslut_3.jpeg]]
@@ -174,7 +174,7 @@ SIFT的全称是Scale Invariant Feature Transform，尺度不变特征变换，�
 8. 通过描述符的距离进行选择需要的点，通过设置coff系数来决定匹配的有效关键点数量。
 9. 估计模板和场景之间的单应性，计算第二张图相对于第一张图的畸变。
 10. 在场景图像中绘制检测到的模板。
-12. 绘制SIFT关键点匹配。
+11. 绘制SIFT关键点匹配。
 ** 结果分析与讨论
 *** 灰度化
 确定灰度值的max和min并设置为上下限，然后对其他像素点的灰度值进行线性插值
