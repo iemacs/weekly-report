@@ -100,6 +100,9 @@ MNIST手写数字集
    AutoEncoder还原之后的图片和原图片对比如下：
    [[./img/autoencoder/MNIST/Conv_AE_restruction.png]]
    上图根据原图片和生成图片的对比，第一行表示原图片，第二行表示卷积自编码器decoder还原之后的结果，上图可看出效果不错。
+   LOSS变化图：
+   [[./img/autoencoder/MNIST/Conv_AE_training_loss.png]]
+   [[./img/autoencoder/MNIST/Conv_AE_training_accuracy.png]]
 ** 结论
 实验中用到的几种自编码器的变形对于不同数字的表示效果明显好于普通自编码器，基本能将10个分类分开；而且重构生成结果也较好。
 以下效果需要着重考虑：
