@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-18 周二 22:06 -->
+<!-- 2021-05-25 周二 21:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>平滑滤波处理火焰图像数据</title>
@@ -233,25 +233,25 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2832bac">1. 实验目的</a></li>
-<li><a href="#orgd9cd062">2. 理论基础</a></li>
-<li><a href="#org0936d0e">3. 数据来源</a></li>
-<li><a href="#orgd7640e9">4. 实验步骤</a></li>
-<li><a href="#org7ee3417">5. 结果分析与讨论</a></li>
-<li><a href="#org8a55356">6. 结论</a></li>
+<li><a href="#orgd8c588d">1. 实验目的</a></li>
+<li><a href="#org9b80f23">2. 理论基础</a></li>
+<li><a href="#orgd0ad17f">3. 数据来源</a></li>
+<li><a href="#org07fcb23">4. 实验步骤</a></li>
+<li><a href="#org47fedc2">5. 结果分析与讨论</a></li>
+<li><a href="#org90ab541">6. 结论</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2832bac" class="outline-2">
-<h2 id="org2832bac"><span class="section-number-2">1</span> 实验目的</h2>
+<div id="outline-container-orgd8c588d" class="outline-2">
+<h2 id="orgd8c588d"><span class="section-number-2">1</span> 实验目的</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li>消除图像在数字化过程中产生或者混入的噪声，即消除闪烁对摄像机成像的影响。</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd9cd062" class="outline-2">
-<h2 id="orgd9cd062"><span class="section-number-2">2</span> 理论基础</h2>
+<div id="outline-container-org9b80f23" class="outline-2">
+<h2 id="org9b80f23"><span class="section-number-2">2</span> 理论基础</h2>
 <div class="outline-text-2" id="text-2">
 <ol class="org-ol">
 <li><p>
@@ -321,16 +321,16 @@ p点是掩膜中心（黄色圈圈），q点是邻域内某点（白色圈圈）
 </ol>
 </div>
 </div>
-<div id="outline-container-org0936d0e" class="outline-2">
-<h2 id="org0936d0e"><span class="section-number-2">3</span> 数据来源</h2>
+<div id="outline-container-orgd0ad17f" class="outline-2">
+<h2 id="orgd0ad17f"><span class="section-number-2">3</span> 数据来源</h2>
 <div class="outline-text-2" id="text-3">
 <ul class="org-ul">
 <li>火电厂视频数据截取的火焰图像。</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd7640e9" class="outline-2">
-<h2 id="orgd7640e9"><span class="section-number-2">4</span> 实验步骤</h2>
+<div id="outline-container-org07fcb23" class="outline-2">
+<h2 id="org07fcb23"><span class="section-number-2">4</span> 实验步骤</h2>
 <div class="outline-text-2" id="text-4">
 <ol class="org-ol">
 <li><p>
@@ -388,8 +388,8 @@ dst = = cv2.bilateralFilter(src, d, sigmaColor, sigmaSpace[, dst[, borderType]])
 </ol>
 </div>
 </div>
-<div id="outline-container-org7ee3417" class="outline-2">
-<h2 id="org7ee3417"><span class="section-number-2">5</span> 结果分析与讨论</h2>
+<div id="outline-container-org47fedc2" class="outline-2">
+<h2 id="org47fedc2"><span class="section-number-2">5</span> 结果分析与讨论</h2>
 <div class="outline-text-2" id="text-5">
 
 <div class="figure">
@@ -446,8 +446,8 @@ dst = = cv2.bilateralFilter(src, d, sigmaColor, sigmaSpace[, dst[, borderType]])
 </ol>
 </div>
 </div>
-<div id="outline-container-org8a55356" class="outline-2">
-<h2 id="org8a55356"><span class="section-number-2">6</span> 结论</h2>
+<div id="outline-container-org90ab541" class="outline-2">
+<h2 id="org90ab541"><span class="section-number-2">6</span> 结论</h2>
 <div class="outline-text-2" id="text-6">
 <ol class="org-ol">
 <li>线性滤波随着核大小逐渐变大，图像变得更加模糊，但均不丢失图像的关键信息。</li>
@@ -457,7 +457,7 @@ dst = = cv2.bilateralFilter(src, d, sigmaColor, sigmaSpace[, dst[, borderType]])
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2021-05-18 周二 22:06</p>
+<p class="date">Created: 2021-05-25 周二 21:16</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
